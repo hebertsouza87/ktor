@@ -21,7 +21,7 @@ class CharsetTest {
                 addHandler { request ->
                     assertEquals("UTF-8", request.headers[HttpHeaders.AcceptCharset])
 
-                    request.response("Content", HttpStatusCode.OK, buildHeaders {
+                    respond("Content", HttpStatusCode.OK, buildHeaders {
                         append(HttpHeaders.ContentType, ContentType.Text.Plain.withCharset(Charsets.UTF_8))
                     })
                 }
@@ -30,11 +30,11 @@ class CharsetTest {
                 addHandler { request ->
                     assertEquals("UTF-8", request.headers[HttpHeaders.AcceptCharset])
 
-                    val requestContent = request.content as TextContent
+                    val requestContent = request.body as TextContent
                     assertEquals(ContentType.Text.Plain.withCharset(Charsets.UTF_8), requestContent.contentType)
                     assertEquals("Hello, Test!", requestContent.text)
 
-                    request.responseOk()
+                    respondOk()
                 }
             }
         }
@@ -54,7 +54,7 @@ class CharsetTest {
                 addHandler { request ->
                     assertEquals("ISO-8859-1,UTF-8", request.headers[HttpHeaders.AcceptCharset])
 
-                    request.response("Content", HttpStatusCode.OK, buildHeaders {
+                    respond("Content", HttpStatusCode.OK, buildHeaders {
                         append(HttpHeaders.ContentType, ContentType.Text.Plain.withCharset(Charsets.UTF_8))
                     })
                 }
@@ -63,11 +63,11 @@ class CharsetTest {
                 addHandler { request ->
                     assertEquals("ISO-8859-1,UTF-8", request.headers[HttpHeaders.AcceptCharset])
 
-                    val requestContent = request.content as TextContent
+                    val requestContent = request.body as TextContent
                     assertEquals(ContentType.Text.Plain.withCharset(Charsets.ISO_8859_1), requestContent.contentType)
                     assertEquals("Hello, Test!", requestContent.text)
 
-                    request.responseOk()
+                    respondOk()
                 }
             }
 
@@ -92,7 +92,7 @@ class CharsetTest {
                 addHandler { request ->
                     assertEquals("ISO-8859-1;q=0.9,UTF-8;q=0.1", request.headers[HttpHeaders.AcceptCharset])
 
-                    request.response("Content", HttpStatusCode.OK, buildHeaders {
+                    respond("Content", HttpStatusCode.OK, buildHeaders {
                         append(HttpHeaders.ContentType, ContentType.Text.Plain.withCharset(Charsets.ISO_8859_1))
                     })
                 }
@@ -101,11 +101,11 @@ class CharsetTest {
                 addHandler { request ->
                     assertEquals("ISO-8859-1;q=0.9,UTF-8;q=0.1", request.headers[HttpHeaders.AcceptCharset])
 
-                    val requestContent = request.content as TextContent
+                    val requestContent = request.body as TextContent
                     assertEquals(ContentType.Text.Plain.withCharset(Charsets.ISO_8859_1), requestContent.contentType)
                     assertEquals("Hello, Test!", requestContent.text)
 
-                    request.responseOk()
+                    respondOk()
                 }
             }
 
@@ -130,7 +130,7 @@ class CharsetTest {
                 addHandler { request ->
                     assertEquals("ISO-8859-1,UTF-8;q=0.1", request.headers[HttpHeaders.AcceptCharset])
 
-                    request.response("Content", HttpStatusCode.OK, buildHeaders {
+                    respond("Content", HttpStatusCode.OK, buildHeaders {
                         append(HttpHeaders.ContentType, ContentType.Text.Plain.withCharset(Charsets.ISO_8859_1))
                     })
                 }
@@ -139,11 +139,11 @@ class CharsetTest {
                 addHandler { request ->
                     assertEquals("ISO-8859-1,UTF-8;q=0.1", request.headers[HttpHeaders.AcceptCharset])
 
-                    val requestContent = request.content as TextContent
+                    val requestContent = request.body as TextContent
                     assertEquals(ContentType.Text.Plain.withCharset(Charsets.ISO_8859_1), requestContent.contentType)
                     assertEquals("Hello, Test!", requestContent.text)
 
-                    request.responseOk()
+                    respondOk()
                 }
             }
 

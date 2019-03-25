@@ -15,6 +15,7 @@ import io.ktor.server.engine.*
 import io.ktor.util.*
 import io.ktor.util.cio.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.debug.*
 import kotlinx.coroutines.io.*
 import kotlinx.coroutines.io.jvm.javaio.*
 import kotlinx.io.core.*
@@ -535,6 +536,7 @@ abstract class EngineTestSuite<TEngine : ApplicationEngine, TConfiguration : App
 
     @Test
     fun testURIContent() {
+        DebugProbes.install()
         createAndStartServer {
             handle {
                 call.respond(URIFileContent(this::class.java.classLoader.getResources("java/util/ArrayList.class").toList().first()))

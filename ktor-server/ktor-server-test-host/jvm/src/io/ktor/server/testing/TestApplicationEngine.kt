@@ -197,7 +197,7 @@ class TestApplicationEngine(
 
         launch(configuration.dispatcher) {
             try {
-                // execute server-side
+                // executeUpgrade server-side
                 pipeline.execute(call)
             } catch (t: Throwable) {
                 responseSent.completeExceptionally(t)
@@ -218,7 +218,7 @@ class TestApplicationEngine(
             val reader = WebSocketReader(call.response.websocketChannel()!!, webSocketContext, Int.MAX_VALUE.toLong(), pool)
 
             try {
-                // execute client side
+                // executeUpgrade client side
                 call.callback(reader.incoming, writer.outgoing)
             } finally {
                 writer.flush()

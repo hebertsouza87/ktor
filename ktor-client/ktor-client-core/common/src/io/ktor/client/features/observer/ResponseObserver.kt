@@ -49,6 +49,7 @@ class ResponseObserver(
 
                 context.response = newClientCall.response
                 context.request = newClientCall.request
+                val x = response
 
                 @Suppress("UNCHECKED_CAST")
                 (response.coroutineContext[Job] as CompletableDeferred<Unit>).complete(Unit)
