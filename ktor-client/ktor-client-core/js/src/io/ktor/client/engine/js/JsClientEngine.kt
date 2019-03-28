@@ -7,6 +7,7 @@ import io.ktor.client.features.websocket.JsWebSocketSession
 import io.ktor.client.request.*
 import io.ktor.client.utils.*
 import io.ktor.http.*
+import io.ktor.util.*
 import io.ktor.util.date.*
 import kotlinx.coroutines.*
 import org.w3c.dom.*
@@ -50,7 +51,16 @@ internal class JsClientEngine(override val config: HttpClientEngineConfig) : Htt
     ): HttpResponseData {
         val requestTime = GMTDate()
 
-        val socket = WebSocket(request.url.toString()).await()
+        val urlString = request.url.toString()
+        val socket: WebSocket = if (PlatformUtils.IS_NODE) {
+            val ws = js("require('ws')")
+            js("new ws(urlString)")
+        } else {
+            WebSocket(urlString)
+        }
+
+        socket.awaitConnection()
+
         val session = JsWebSocketSession(callContext, socket)
 
         return HttpResponseData(
@@ -66,7 +76,7 @@ internal class JsClientEngine(override val config: HttpClientEngineConfig) : Htt
     override fun close() {}
 }
 
-private suspend fun WebSocket.await(): WebSocket = suspendCancellableCoroutine { continuation ->
+private suspend fun WebSocket.awaitConnection(): WebSocket = suspendCancellableCoroutine { continuation ->
     onopen = {
         onopen = undefined
         onerror = undefined

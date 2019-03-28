@@ -9,3 +9,7 @@ public final class io/ktor/client/engine/jetty/JettyEngineConfig : io/ktor/clien
 	public final fun setSslContextFactory (Lorg/eclipse/jetty/util/ssl/SslContextFactory;)V
 }
 
+public final class io/ktor/client/engine/jetty/JettyHttp2EngineKt {
+	public static final fun getBalance ()Ljava/util/concurrent/atomic/AtomicInteger;
+}
+

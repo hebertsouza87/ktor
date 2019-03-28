@@ -12,7 +12,7 @@ private const val NONCE_SIZE_IN_BYTES = 8
 @InternalAPI
 actual fun generateNonce(): String {
     val buffer = ByteArray(NONCE_SIZE_IN_BYTES)
-    return hex(crypto.getRandomValues(buffer))
+    return hex(buffer) // crypto.getRandomValues(buffer))
 }
 
 /**
@@ -37,7 +37,9 @@ actual fun Digest(name: String): Digest = object : Digest {
     }
 }
 
-private external object crypto {
+private val crypto: Crypto = if (PlatformUtils.IS_NODE) js("require('crypto')") else js("crypto")
+
+private external class Crypto {
     val subtle: SubtleCrypto
 
     fun getRandomValues(array: ByteArray): ByteArray
