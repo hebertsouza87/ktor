@@ -1,7 +1,4 @@
 
-apply plugin: 'maven'
-apply plugin: 'maven-publish'
-
 apply from: project.rootProject.file('gradle/pom.gradle')
 
 task emptyJar(type: Jar) {
@@ -60,15 +57,7 @@ publishing {
             if (publishLocal) {
                 url globalM2
             } else {
-                def user = 'kotlin'
-                def repo = 'ktor'
-                def name = 'ktor'
-                url = "https://api.bintray.com/maven/$user/$repo/$name/;publish=0"
-                credentials {
-                    username = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-                    password = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-                }
-                
+              
             }
         }
         maven { name = "testLocal"; url = "$rootProject.buildDir/m2" }
